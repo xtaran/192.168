@@ -67,10 +67,12 @@ if (-f $ip_list_file) {
     print "Last known IP was $last_ip.\n";
 }
 
-if ($regenerate_anyway or $last_ip ne $ip) {
+if ($last_ip ne $ip) {
     # Append the current IP to the IP list
-    write_file($ip_list_file, { append => 1 }, $ip);
+    write_file($ip_list_file, { append => 1 }, "$ip\n");
+}
 
+if ($regenerate_anyway or $last_ip ne $ip) {
     # Generate the HTML
     my $output = read_file($header_file);
 
