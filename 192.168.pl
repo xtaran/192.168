@@ -11,11 +11,12 @@ use File::Slurp;
 use File::Tail;
 
 # Config
-my $basedir = "/home/abe/192.168/";
-my $remote_host = 'sym.noone.org';
-my $remote_user = 'abe';
-my $remote_dir = '/home/abe/http/192.168/';
-my $remote_force_ipv = '4'; # IPv4
+my $basedir = "/home/abe/192.168/"; # Where is all the data?
+my $remote_host = 'sym.noone.org'; # Upload to which host?
+my $remote_user = 'abe'; # Upload with which username?
+my $remote_dir = '/home/abe/http/192.168/'; # Upload into which directory
+my $remote_force_ipv = '4'; # 0 = Don't force, 4 = IPv4, 6 = IPv6
+my $regenerate_anyway = 1; # Regenerate even if IP is the same as before?
 
 # Files
 my $ip_list_file = 'ip-list.txt';
@@ -52,14 +53,19 @@ if ($ip eq '127.0.0.1') {
 
 chdir($basedir);
 
-# Check if current IP is the same as the last one, and if not, save
-# the current IP and generate all the HTML.
+# First check if IP list file exists. If so check if current IP is the
+# same as the last one, and if not, save the current IP and generate
+# all the HTML. If it doesn't exist, just create it in the next step
 
-my $ip_list_tail = File::Tail->new('name' => $ip_list_file, 'tail' => 1);
-my $last_ip = $ip_list_tail->read;
-chomp($last_ip);
+my $last_ip = '';
 
-print "Last known IP was $last_ip.\n";
+if (-f $ip_list_file) {
+    my $ip_list_tail = File::Tail->new('name' => $ip_list_file, 'tail' => 1);
+    my $last_ip = $ip_list_tail->read;
+    chomp($last_ip);
+
+    print "Last known IP was $last_ip.\n";
+}
 
 if ($regenerate_anyway or $last_ip ne $ip) {
     # Append the current IP to the IP list
