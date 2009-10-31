@@ -4,6 +4,8 @@
 # in Perl See 192.168.epe.at, 192.168.noone.org,
 # http://epe.at/de/portfolio/192168epeat and
 # http://epe.at/bild/2009/07/192168epeat-im-8-monat
+#
+# Code © 2009 under GPLv2+ by Axel Beckert <abe@deuxchevaux.org>
 
 use strict;
 
