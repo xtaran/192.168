@@ -22,7 +22,7 @@ my $regenerate_anyway = 1; # Regenerate even if IP is the same as before?
 my $ip_list_file = 'ip-list.txt';
 my $header_file  = 'header.html';
 my $footer_file  = 'footer.html';
-my $output_file  = 'index2.html';
+my $output_file  = 'index.html';
 
 # Find default route
 
