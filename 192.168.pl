@@ -77,7 +77,7 @@ if ($regenerate_anyway or $last_ip ne $ip) {
     # Generate the HTML
     my $output = read_file($header_file);
 
-    foreach my $ip_from_list (read_file($ip_list_file)) {
+    foreach my $ip_from_list (reverse read_file($ip_list_file)) {
 	$output .= &make_ip_line($ip_from_list);
     }
 
