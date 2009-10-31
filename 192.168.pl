@@ -61,7 +61,7 @@ my $last_ip = '';
 
 if (-f $ip_list_file) {
     my $ip_list_tail = File::Tail->new('name' => $ip_list_file, 'tail' => 1);
-    my $last_ip = $ip_list_tail->read;
+    $last_ip = $ip_list_tail->read;
     chomp($last_ip);
 
     print "Last known IP was $last_ip.\n";
@@ -69,6 +69,7 @@ if (-f $ip_list_file) {
 
 if ($last_ip ne $ip) {
     # Append the current IP to the IP list
+    print "Last known IP ($last_ip) differs from current IP ($ip), so save it.\n";
     write_file($ip_list_file, { append => 1 }, "$ip\n");
 }
 
