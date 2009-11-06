@@ -28,8 +28,16 @@ my $output_file  = 'index.html';
 
 # Find default route
 
-my $default_route_via_dev = `ip r | fgrep 'default via' | awk '{print \$5}'`;
-chomp($default_route_via_dev);
+my $default_route = `ip r`;
+my $default_route_via_dev = '';
+
+if ($default_route =~ /default via/) {
+    my @words = split(/\s+/, $default_route);
+    $default_route_via_dev = $words[4];
+} elsif ($default_route =~ /default dev/) {
+    my @words = split(/\s+/, $default_route);
+    $default_route_via_dev = $words[2];
+}
 
 unless ($default_route_via_dev) {
     print STDERR "No default route found. Nothing to do.\n";
