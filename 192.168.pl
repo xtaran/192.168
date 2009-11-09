@@ -88,6 +88,7 @@ if ($regenerate_anyway or $last_ip ne $ip) {
     my $output = read_file($header_file);
 
     foreach my $ip_from_list (reverse read_file($ip_list_file)) {
+	chomp($ip_list_file);
 	$output .= &make_ip_line($ip_from_list);
     }
 
