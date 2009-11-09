@@ -88,7 +88,6 @@ if ($regenerate_anyway or $last_ip ne $ip) {
     my $output = read_file($header_file);
 
     foreach my $ip_from_list (reverse read_file($ip_list_file)) {
-	chomp($ip_list_file);
 	$output .= &make_ip_line($ip_from_list);
     }
 
@@ -118,6 +117,7 @@ sub connandcopy() {
 # Generate some nice HTML from an IP
 sub make_ip_line {
     my $ip = shift;
+    chomp($ip);
     my @ip = split(/\./, $ip);
 
     my $bgcolor = sprintf('#%02X%02X%02X', @ip[0..2]);
