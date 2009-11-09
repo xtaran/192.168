@@ -28,7 +28,7 @@ my $output_file  = 'index.html';
 
 # Find default route
 
-my $default_route = `ip r`;
+my $default_route = join("\n", grep /default/, split(/\n/, `ip r`));
 my $default_route_via_dev = '';
 
 if ($default_route =~ /default via/) {
