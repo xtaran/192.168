@@ -19,7 +19,7 @@ my $remote_user = 'abe'; # Upload with which username?
 my $remote_dir = '/home/abe/http/192.168/'; # Upload into which directory
 my $remote_force_ipv = '4'; # 0 = Don't force, 4 = IPv4, 6 = IPv6
 my $regenerate_anyway = 1; # Regenerate even if IP is the same as before?
-my $dont_ping = $ARGV[0] eq '-np';
+my $dont_ping = defined($ARGV[0]) && ($ARGV[0] eq '-np');
 
 # Files
 my $ip_list_file = 'ip-list.txt';
