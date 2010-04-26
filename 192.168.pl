@@ -51,6 +51,8 @@ print "Default IPv4 route goes via $default_route_via_dev.\n";
 
 my $ip = `ip addr show $default_route_via_dev | fgrep 'inet ' | awk '{print \$2}'`;
 chomp($ip);
+
+# Remove netmask which still occurred then and when in the IP address
 $ip =~ s(^([^/]*)/\d+$)($1);
 
 print "Current IP on $default_route_via_dev is $ip.\n";
