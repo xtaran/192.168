@@ -55,6 +55,11 @@ chomp($ip);
 # Remove netmask which still occurred then and when in the IP address
 $ip =~ s(^([^/]*)/\d+$)($1);
 
+if ($ip eq '') {
+    print STDERR "No IP found for $default_route_via_dev.\n";
+    exit 0;
+}
+
 print "Current IP on $default_route_via_dev is $ip.\n";
 
 if ($ip eq '127.0.0.1') {
