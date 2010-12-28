@@ -20,6 +20,7 @@ my $remote_dir = '/home/abe/http/192.168/'; # Upload into which directory
 my $remote_force_ipv = '4'; # 0 = Don't force, 4 = IPv4, 6 = IPv6
 my $regenerate_anyway = 1; # Regenerate even if IP is the same as before?
 my $dont_ping = defined($ARGV[0]) && ($ARGV[0] eq '-np');
+my $dont_send = defined($ARGV[0]) && ($ARGV[0] eq '-ns');
 
 # Files
 my $ip_list_file = 'ip-list.txt';
@@ -115,7 +116,7 @@ if ($regenerate_anyway or $last_ip ne $ip) {
 # Check if we really have a connectio and if so, copy the output to
 # the server.
 sub connandcopy() {
-    if ($dont_ping or system(qw(ping -c 1), $remote_host) == 0) {
+    if (!$dont_send and ($dont_ping or system(qw(ping -c 1), $remote_host) == 0)) {
 	system(qw(scp),
 	       ($remote_force_ipv ? ("-$remote_force_ipv") : ()),
 	       $output_file, "$remote_user\@$remote_host:$remote_dir");
