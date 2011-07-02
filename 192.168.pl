@@ -50,7 +50,7 @@ print "Default IPv4 route goes via $default_route_via_dev.\n";
 
 # Find current IP address
 
-my $ip = `ip addr show $default_route_via_dev | fgrep 'inet ' | awk '\$7 !~ /:/ {print \$2}'`;
+my $ip = `ip addr show $default_route_via_dev | fgrep 'inet ' | head -1 | awk '\$7 !~ /:/ {print \$2}'`;
 chomp($ip);
 
 # Remove netmask which still occurred then and when in the IP address
