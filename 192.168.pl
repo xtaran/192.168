@@ -117,7 +117,7 @@ if ($regenerate_anyway or $last_ip ne $ip) {
 # the server.
 sub connandcopy() {
     if (!$dont_send and ($dont_ping or system(qw(ping -c 1), $remote_host) == 0)) {
-	system(qw(scp),
+	system(qw(rsync),
 	       ($remote_force_ipv ? ("-$remote_force_ipv") : ()),
 	       $output_file, "$remote_user\@$remote_host:$remote_dir");
     }
