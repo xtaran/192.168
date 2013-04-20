@@ -107,19 +107,27 @@ if ($regenerate_anyway or $last_ip ne $ip) {
 }
 
 # Finally upload the HTML file
-&connandcopy();
+exit &connandcopy();
 
 ###
 ### Functions
 ###
 
-# Check if we really have a connectio and if so, copy the output to
+# Check if we really have a connection and if so, copy the output to
 # the server.
+
 sub connandcopy() {
-    if (!$dont_send and ($dont_ping or system(qw(ping -c 1), $remote_host) == 0)) {
-	system(qw(rsync -av),
-	       ($remote_force_ipv ? ("-$remote_force_ipv") : ()),
-	       $output_file, "$remote_user\@$remote_host:$remote_dir");
+    unless ($dont_send) {
+        unless ($dont_ping) {
+            my $rc = system(qw(ping -c 1), $remote_host);
+            return $rc >> 8 if $rc;
+        }
+
+        my $rc = system(
+            qw(rsync -av),
+            ($remote_force_ipv ? ("-$remote_force_ipv") : ()),
+            $output_file, "$remote_user\@$remote_host:$remote_dir");
+        return $rc >> 8 if $rc;
     }
 }
 
