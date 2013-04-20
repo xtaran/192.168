@@ -7,7 +7,7 @@
 #
 # Code © 2009, 2010, 2013 under GPLv2+ by Axel Beckert <abe@deuxchevaux.org>
 
-use strict;
+use Modern::Perl;
 
 use File::Slurp;
 use File::Tail;
@@ -42,11 +42,11 @@ if ($default_route =~ /default via/) {
 }
 
 unless ($default_route_via_dev) {
-    print STDERR "No default route found. Nothing to do.\n";
+    say STDERR "No default route found. Nothing to do.";
     exit 0;
 }
 
-print "Default IPv4 route goes via $default_route_via_dev.\n";
+say "Default IPv4 route goes via $default_route_via_dev.";
 
 # Find current IP address
 
@@ -57,14 +57,14 @@ chomp($ip);
 $ip =~ s(^([^/]*)/\d+$)($1);
 
 if ($ip eq '') {
-    print STDERR "No IP found for $default_route_via_dev.\n";
+    say STDERR "No IP found for $default_route_via_dev.";
     exit 0;
 }
 
 print "Current IP on $default_route_via_dev is $ip.\n";
 
 if ($ip eq '127.0.0.1') {
-    print STDERR "Default route via 127.0.0.1. Nothing to do.\n";
+    say STDERR "Default route via 127.0.0.1. Nothing to do.";
     exit 0;
 }
 
@@ -83,12 +83,12 @@ if (-f $ip_list_file) {
     $last_ip = $ip_list_tail->read;
     chomp($last_ip);
 
-    print "Last known IP was $last_ip.\n";
+    say "Last known IP was $last_ip.";
 }
 
 if ($last_ip ne $ip) {
     # Append the current IP to the IP list
-    print "Last known IP ($last_ip) differs from current IP ($ip), so save it.\n";
+    say "Last known IP ($last_ip) differs from current IP ($ip), so save it.";
     write_file($ip_list_file, { append => 1 }, "$ip\n");
 }
 
