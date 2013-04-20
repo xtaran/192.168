@@ -9,6 +9,7 @@
 
 use Modern::Perl;
 
+use List::Util qw(sum);
 use File::Slurp;
 use File::Tail;
 
@@ -143,13 +144,4 @@ sub make_ip_line {
     my $style = "background-color: $bgcolor; color: $fgcolor;";
 
     return qq|<span class="item" style="$style">$ip</span>\n|;
-}
-
-sub sum {
-    my $result = 0;
-    foreach my $value (@_) {
-	$result += $value;
-    }
-
-    return $result;
 }
